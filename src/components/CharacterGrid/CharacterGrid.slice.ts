@@ -1,12 +1,13 @@
+import { Some, Option, None } from '@hqoss/monads';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Character } from '../../types/character';
 
 export interface CharacterGridState {
-  characters: Character[];
+  characters: Option<Character[]>;
 }
 
 const initialState: CharacterGridState = {
-  characters: [],
+  characters: None,
 };
 
 const slice = createSlice({
@@ -14,8 +15,8 @@ const slice = createSlice({
   initialState,
   reducers: {
     startLoadingCharacters: () => initialState,
-    loadCharacters: (state, { payload }: PayloadAction<Character[]>) => {
-      state.characters = payload;
+    loadCharacters: (state, { payload: characters }: PayloadAction<Character[]>) => {
+      state.characters = Some(characters);
     },
   },
 });
