@@ -1,3 +1,10 @@
+import { CharacterGrid } from '../../CharacterGrid/CharacterGrid';
+
 export function Home() {
-  return <div>home</div>;
+  return (
+    <div>
+      <div>home</div>
+      <CharacterGrid />
+    </div>
+  );
 }
