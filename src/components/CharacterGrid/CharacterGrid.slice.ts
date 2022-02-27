@@ -4,10 +4,12 @@ import { Character } from '../../types/character';
 
 export interface CharacterGridState {
   characters: Option<Character[]>;
+  error: string;
 }
 
 const initialState: CharacterGridState = {
   characters: None,
+  error: '',
 };
 
 const slice = createSlice({
@@ -18,9 +20,12 @@ const slice = createSlice({
     loadCharacters: (state, { payload: characters }: PayloadAction<Character[]>) => {
       state.characters = Some(characters);
     },
+    updateError: (state, { payload: error }: PayloadAction<string>) => {
+      state.error = error;
+    },
   },
 });
 
-export const { startLoadingCharacters, loadCharacters } = slice.actions;
+export const { startLoadingCharacters, loadCharacters, updateError } = slice.actions;
 
 export default slice.reducer;
