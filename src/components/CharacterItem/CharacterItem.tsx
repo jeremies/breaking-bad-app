@@ -1,5 +1,10 @@
 import { Character } from '../../types/character';
+import styles from './CharacterItem.module.css';
 
 export function CharacterItem({ character }: { character: Character }) {
-  return <div>{character.name}</div>;
+  return (
+    <div className={styles.characterItem}>
+      <img src={character.img} />
+    </div>
+  );
 }

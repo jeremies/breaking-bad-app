@@ -1,0 +1,18 @@
+.characterItem {
+  cursor: pointer;
+  background-color: transparent;
+  height: 300px;
+  perspective: 1000px;
+  transition: transform 0.8s;
+}
+
+.characterItem:hover {
+  transform: scale(1.25);
+  z-index: 10;
+}
+
+.characterItem img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
