@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCharacter } from '../../../services/breaking-bad';
+import { getCharacter, getRandomQuoteByAuthor } from '../../../services/breaking-bad';
 import { store } from '../../../state/store';
 import { useStore } from '../../../state/storeHooks';
 import { redirect } from '../../../utils/utils';
-import { initializeCharacterPage, loadCharacter } from './CharacterPage.slice';
+import { initializeCharacterPage, loadCharacter, loadQuote } from './CharacterPage.slice';
 
 export interface Params {
   id: string;
@@ -14,7 +14,7 @@ export function CharacterPage() {
   const { id } = useParams<keyof Params>() as Params;
 
   const {
-    characterPage: { character },
+    characterPage: { character, quote },
   } = useStore(({ characterPage }) => ({
     characterPage,
   }));
@@ -23,10 +23,18 @@ export function CharacterPage() {
     onLoad(id);
   }, [id]);
 
-  return character.match({
-    none: () => <div>Loading character...</div>,
-    some: (character) => <div>{character.name}</div>,
-  });
+  return (
+    <Fragment>
+      {character.match({
+        none: () => <div>Loading character...</div>,
+        some: (character) => <div>{character.name}</div>,
+      })}
+      {quote.match({
+        none: () => <div>Loading quote...</div>,
+        some: (quote) => <div>{quote.quote}</div>,
+      })}
+    </Fragment>
+  );
 }
 
 async function onLoad(id: string) {
@@ -35,7 +43,14 @@ async function onLoad(id: string) {
   try {
     const character = await getCharacter(id);
     store.dispatch(loadCharacter(character));
+
+    getNewRandomQuote(character.name);
   } catch (err) {
     redirect('');
   }
+}
+
+async function getNewRandomQuote(author: string) {
+  const quote = await getRandomQuoteByAuthor(author);
+  store.dispatch(loadQuote(quote));
 }
