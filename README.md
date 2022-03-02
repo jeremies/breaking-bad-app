@@ -1,3 +1,9 @@
+# Breaking bad App
+
+React App to show cast info for breaking bad.
+
+### [Demo](https://breaking-bad-jeremies.netlify.app/)
+
 This codebase was created to demonstrate a frontend application built with React, Typescript, and Redux Toolkit including read operations, routing and more.
 
 # How it works
