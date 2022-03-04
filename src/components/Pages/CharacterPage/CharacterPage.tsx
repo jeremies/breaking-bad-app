@@ -7,6 +7,7 @@ import { Character } from '../../../types/character';
 import { redirect } from '../../../utils/utils';
 import { initializeCharacterPage, loadCharacter, loadQuote } from './CharacterPage.slice';
 import styles from './CharacterPage.module.css';
+import { useTranslation } from 'react-i18next';
 
 export interface Params {
   id: string;
@@ -14,6 +15,7 @@ export interface Params {
 
 export function CharacterPage() {
   const { id } = useParams<keyof Params>() as Params;
+  const { t } = useTranslation('main');
 
   const {
     characterPage: { character, quote },
@@ -28,11 +30,11 @@ export function CharacterPage() {
   return (
     <Fragment>
       {character.match({
-        none: () => <div>Loading character...</div>,
+        none: () => <div>{t('character_page.loading_character')}</div>,
         some: (character) => <CharacterInfo character={character} />,
       })}
       {quote.match({
-        none: () => <div>Loading quote...</div>,
+        none: () => <div>{t('character_page.loading_quote')}</div>,
         some: (quote) => <div>{quote.quote}</div>,
       })}
     </Fragment>
@@ -58,14 +60,16 @@ async function getNewRandomQuote(author: string) {
 }
 
 function CharacterInfo({ character }: { character: Character }) {
+  const { t } = useTranslation('main');
+
   return (
     <div className={styles.container}>
       <img className={styles.characterImage} src={character.img} />
       <div className={styles.characterAttributes}>
         <h1>{character.name}</h1>
-        <Attribute name="Birthday" value={character.birthday} />
-        <ArrayAttribute name="Occupation" value={character.occupation} />
-        <Attribute name="Status" value={character.status} />
+        <Attribute name={t('character_page.birthday')} value={character.birthday} />
+        <ArrayAttribute name={t('character_page.occupation')} value={character.occupation} />
+        <Attribute name={t('character_page.status')} value={character.status} />
       </div>
     </div>
   );

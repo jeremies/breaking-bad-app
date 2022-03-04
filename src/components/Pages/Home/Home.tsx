@@ -10,7 +10,6 @@ export function Home() {
 
   return (
     <div className={styles.container}>
-      <div>home</div>
       <CharacterGrid />
     </div>
   );
