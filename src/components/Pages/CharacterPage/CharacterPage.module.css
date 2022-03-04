@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+.characterImage {
+  height: 300px;
+}
+
+.characterAttributes {
+  margin-left: 20px;
+}
+
+.attribute {
+  padding-bottom: 15px;
+}
