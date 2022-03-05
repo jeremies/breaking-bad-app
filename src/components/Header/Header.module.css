@@ -1,0 +1,16 @@
+.navbar {
+  background-color: lightblue;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home {
+  margin-left: 20px;
+}
+
+.flag {
+  margin-right: 10px;
+  font-size: 20px;
+}

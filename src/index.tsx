@@ -5,6 +5,10 @@ import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import main_es from './translations/es/main.json';
 import main_en from './translations/en/main.json';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 i18next.init({
   interpolation: { escapeValue: false }, // React already does escaping
