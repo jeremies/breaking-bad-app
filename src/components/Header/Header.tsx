@@ -1,19 +1,39 @@
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useLocation } from 'react-router-dom';
 
 export function Header() {
+  const handleClickBack = () => {
+    window.location.hash = '';
+  };
+  const location = useLocation();
+  const [t] = useTranslation('main');
+
   return (
-    <div className={styles.navbar}>
-      <NavLink to="/" className={styles.home}>
-        Home
-      </NavLink>
-      <LanguageSelector />
-    </div>
+    <AppBar position="static" style={{ background: '#d3d3d3' }}>
+      <Toolbar>
+        {location.pathname.includes('character') ? (
+          <IconButton size="large" edge="start" sx={{ mr: 2 }} onClick={handleClickBack}>
+            <ArrowBackIcon />
+          </IconButton>
+        ) : (
+          <div className={styles.blank}></div>
+        )}
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{ color: 'black' }}>
+          {t('header.app_title')}
+        </Typography>
+        <LanguageSelector />
+      </Toolbar>
+    </AppBar>
   );
 }
 
@@ -29,7 +49,7 @@ function LanguageSelector() {
   };
 
   return (
-    <ToggleButtonGroup value={language} exclusive onChange={handleChange}>
+    <ToggleButtonGroup size="small" value={language} exclusive onChange={handleChange}>
       <ToggleButton value="en">
         <ReactCountryFlag className={styles.flag} svg countryCode="US" />
         English
