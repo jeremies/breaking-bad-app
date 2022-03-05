@@ -1,12 +1,13 @@
 {
+  "character_grid": {
+    "loading_characters": "Loading characters..."
+  },
   "character_page": {
     "loading_character": "Loading character...",
     "loading_quote": "Loading quote...",
     "birthday": "Birthday",
     "occupation": "Occupation",
-    "status": "Status"
-  },
-  "character_grid": {
-    "loading_characters": "Loading characters..."
+    "status": "Status",
+    "no_quotes": "No quotes available"
   }
 }

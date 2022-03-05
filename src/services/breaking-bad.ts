@@ -20,9 +20,12 @@ export async function getCharacter(id: string): Promise<Character> {
   return characterDecoder.verify(data[0]);
 }
 
-export async function getRandomQuoteByAuthor(author: string): Promise<Quote> {
+export async function getRandomQuoteByAuthor(author: string): Promise<Result<Quote, string>> {
   const params = new URLSearchParams();
   params.append('author', author);
   const { data } = await axios.get(`quote/random?${params}`);
-  return quoteDecoder.verify(data[0]);
+  if (data.length === 0) {
+    return Err('character_page.no_quotes');
+  }
+  return Ok(quoteDecoder.verify(data[0]));
 }

@@ -5,7 +5,7 @@ import { store } from '../../../state/store';
 import { useStore } from '../../../state/storeHooks';
 import { Character } from '../../../types/character';
 import { redirect } from '../../../utils/utils';
-import { initializeCharacterPage, loadCharacter, loadQuote } from './CharacterPage.slice';
+import { initializeCharacterPage, loadCharacter, loadQuote, updateQuoteError } from './CharacterPage.slice';
 import styles from './CharacterPage.module.css';
 import { useTranslation } from 'react-i18next';
 
@@ -18,7 +18,7 @@ export function CharacterPage() {
   const { t } = useTranslation('main');
 
   const {
-    characterPage: { character, quote },
+    characterPage: { character, quote, quoteError },
   } = useStore(({ characterPage }) => ({
     characterPage,
   }));
@@ -33,10 +33,12 @@ export function CharacterPage() {
         none: () => <div>{t('character_page.loading_character')}</div>,
         some: (character) => <CharacterInfo character={character} />,
       })}
-      {quote.match({
-        none: () => <div>{t('character_page.loading_quote')}</div>,
-        some: (quote) => <div>{quote.quote}</div>,
-      })}
+      {quoteError && <div>{t(quoteError)}</div>}
+      {!quoteError &&
+        quote.match({
+          none: () => <div>{t('character_page.loading_quote')}</div>,
+          some: (quote) => <div>{quote.quote}</div>,
+        })}
     </Fragment>
   );
 }
@@ -48,7 +50,7 @@ async function onLoad(id: string) {
     const character = await getCharacter(id);
     store.dispatch(loadCharacter(character));
 
-    getNewRandomQuote(character.name);
+    await getNewRandomQuote(character.name);
   } catch (err) {
     redirect('');
   }
@@ -56,7 +58,15 @@ async function onLoad(id: string) {
 
 async function getNewRandomQuote(author: string) {
   const quote = await getRandomQuoteByAuthor(author);
-  store.dispatch(loadQuote(quote));
+
+  quote.match({
+    err: (error) => {
+      store.dispatch(updateQuoteError(error));
+    },
+    ok: (quote) => {
+      store.dispatch(loadQuote(quote));
+    },
+  });
 }
 
 function CharacterInfo({ character }: { character: Character }) {
