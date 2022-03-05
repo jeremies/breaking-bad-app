@@ -1,9 +1,12 @@
 .container {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
 }
 
 .characterImage {
-  height: 500px;
+  height: 600px;
 }
 
 .characterAttributes {
@@ -12,4 +15,17 @@
 
 .attribute {
   padding-bottom: 15px;
+}
+
+.quoteContanier {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.existingQuoteContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

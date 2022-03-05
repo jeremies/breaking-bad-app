@@ -8,6 +8,11 @@ import { redirect } from '../../../utils/utils';
 import { initializeCharacterPage, loadCharacter, loadQuote, updateQuoteError } from './CharacterPage.slice';
 import styles from './CharacterPage.module.css';
 import { useTranslation } from 'react-i18next';
+import Typography from '@mui/material/Typography';
+import { Option } from '@hqoss/monads';
+import { Quote } from '../../../types/quote';
+import Fab from '@mui/material/Fab';
+import CachedIcon from '@mui/icons-material/Cached';
 
 export interface Params {
   id: string;
@@ -33,12 +38,7 @@ export function CharacterPage() {
         none: () => <div>{t('character_page.loading_character')}</div>,
         some: (character) => <CharacterInfo character={character} />,
       })}
-      {quoteError && <div>{t(quoteError)}</div>}
-      {!quoteError &&
-        quote.match({
-          none: () => <div>{t('character_page.loading_quote')}</div>,
-          some: (quote) => <div>{quote.quote}</div>,
-        })}
+      <CharacterQuote quote={quote} quoteError={quoteError} />
     </Fragment>
   );
 }
@@ -76,7 +76,9 @@ function CharacterInfo({ character }: { character: Character }) {
     <div className={styles.container}>
       <img className={styles.characterImage} src={character.img} />
       <div className={styles.characterAttributes}>
-        <h1>{character.name}</h1>
+        <Typography variant="h3" gutterBottom>
+          {character.name}
+        </Typography>
         <Attribute name={t('character_page.birthday')} value={character.birthday} />
         <ArrayAttribute name={t('character_page.occupation')} value={character.occupation} />
         <Attribute name={t('character_page.status')} value={character.status} />
@@ -94,19 +96,40 @@ function CharacterInfo({ character }: { character: Character }) {
 }
 
 function ArrayAttribute({ name, value }: { name: string; value: Array<string | number> }) {
-  return (
-    <div className={styles.attribute}>
-      <strong>{name}</strong>
-      <div>{value.join(' | ')}</div>
-    </div>
-  );
+  return <Attribute name={name} value={value.join(' | ')} />;
 }
 
 function Attribute({ name, value }: { name: string; value: string }) {
   return (
     <div className={styles.attribute}>
-      <strong>{name}</strong>
-      <div>{value}</div>
+      <Typography variant="body1">
+        <strong>{name}</strong>
+      </Typography>
+      <Typography variant="body1">{value}</Typography>
+    </div>
+  );
+}
+
+function CharacterQuote({ quote, quoteError }: { quote: Option<Quote>; quoteError: string }) {
+  const { t } = useTranslation('main');
+
+  return (
+    <div className={styles.quoteContanier}>
+      {quoteError && <Typography variant="body1">{t(quoteError)}</Typography>}
+      {!quoteError &&
+        quote.match({
+          none: () => <Typography variant="body1">{t('character_page.loading_quote')}</Typography>,
+          some: (quote) => (
+            <div className={styles.existingQuoteContainer}>
+              <Typography variant="h6" ml={10} mr={10} mb={2}>
+                "{quote.quote}"
+              </Typography>
+              <Fab>
+                <CachedIcon />
+              </Fab>
+            </div>
+          ),
+        })}
     </div>
   );
 }
