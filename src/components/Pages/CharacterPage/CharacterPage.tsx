@@ -80,12 +80,20 @@ function CharacterInfo({ character }: { character: Character }) {
         <Attribute name={t('character_page.birthday')} value={character.birthday} />
         <ArrayAttribute name={t('character_page.occupation')} value={character.occupation} />
         <Attribute name={t('character_page.status')} value={character.status} />
+        <Attribute name={t('character_page.nickname')} value={character.nickname} />
+        <ArrayAttribute name={t('character_page.appearance')} value={character.appearance} />
+        <Attribute name={t('character_page.portrayed')} value={character.portrayed} />
+        <Attribute name={t('character_page.category')} value={character.category} />
+        <ArrayAttribute
+          name={t('character_page.better_call_saul_appearance')}
+          value={character.better_call_saul_appearance}
+        />
       </div>
     </div>
   );
 }
 
-function ArrayAttribute({ name, value }: { name: string; value: Array<string> }) {
+function ArrayAttribute({ name, value }: { name: string; value: Array<string | number> }) {
   return (
     <div className={styles.attribute}>
       <strong>{name}</strong>

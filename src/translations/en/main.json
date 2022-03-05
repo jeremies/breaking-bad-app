@@ -8,6 +8,11 @@
     "birthday": "Birthday",
     "occupation": "Occupation",
     "status": "Status",
+    "nickname": "Nickname",
+    "appearance": "Appearance",
+    "portrayed": "Portrayed",
+    "category": "Category",
+    "better_call_saul_appearance": "Better Call Saul Appearance",
     "no_quotes": "No quotes available"
   }
 }
