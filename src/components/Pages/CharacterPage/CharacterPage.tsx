@@ -38,7 +38,7 @@ export function CharacterPage() {
         none: () => <div>{t('character_page.loading_character')}</div>,
         some: (character) => <CharacterInfo character={character} />,
       })}
-      <CharacterQuote quote={quote} quoteError={quoteError} />
+      <CharacterQuote quote={quote} quoteError={quoteError} character={character} />
     </Fragment>
   );
 }
@@ -110,8 +110,25 @@ function Attribute({ name, value }: { name: string; value: string }) {
   );
 }
 
-function CharacterQuote({ quote, quoteError }: { quote: Option<Quote>; quoteError: string }) {
+function CharacterQuote({
+  quote,
+  quoteError,
+  character,
+}: {
+  quote: Option<Quote>;
+  quoteError: string;
+  character: Option<Character>;
+}) {
   const { t } = useTranslation('main');
+
+  function reload() {
+    character.match({
+      none: () => {},
+      some: (character) => {
+        getNewRandomQuote(character.name);
+      },
+    });
+  }
 
   return (
     <div className={styles.quoteContanier}>
@@ -124,7 +141,7 @@ function CharacterQuote({ quote, quoteError }: { quote: Option<Quote>; quoteErro
               <Typography variant="h6" ml={10} mr={10} mb={2}>
                 "{quote.quote}"
               </Typography>
-              <Fab>
+              <Fab onClick={reload}>
                 <CachedIcon />
               </Fab>
             </div>
