@@ -1,6 +1,9 @@
+import { Ok } from '@hqoss/monads';
+// eslint-disable-next-line
+// @ts-ignore
 import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { getCharacter } from '../../../services/breaking-bad';
+import { getCharacter, getRandomQuoteByAuthor } from '../../../services/breaking-bad';
 
 import { redirect } from '../../../utils/utils';
 import { CharacterPage } from './CharacterPage';
@@ -8,19 +11,27 @@ import { CharacterPage } from './CharacterPage';
 jest.mock('../../../services/breaking-bad.ts');
 
 const mockedGetCharacter = getCharacter as jest.Mock<ReturnType<typeof getCharacter>>;
+const mockedGetRandomQuoteByAuthor = getRandomQuoteByAuthor as jest.Mock<ReturnType<typeof getRandomQuoteByAuthor>>;
 
 const defaultCharacter = {
   char_id: 1,
   name: 'Test 1',
   birthday: 'Test 1',
   occupation: [],
-  img: null,
+  img: 'Test 1',
   status: 'Test 1',
   nickname: 'Test 1',
   appearance: [],
   portrayed: 'Test 1',
   category: 'Test 1',
   better_call_saul_appearance: [],
+};
+
+const defaultQuote = {
+  quote_id: 1,
+  quote: 'Test 1',
+  author: 'Test 1',
+  series: 'Test 1',
 };
 
 async function renderWithPath(id: string) {
@@ -68,5 +79,17 @@ describe('In the character page', () => {
     expect(screen.getByText('The Portrayed')).toBeInTheDocument();
     expect(screen.getByText('The Category')).toBeInTheDocument();
     expect(screen.getByText('9876 | 5432')).toBeInTheDocument();
+  });
+
+  it('Should render random quote on load', async () => {
+    mockedGetCharacter.mockResolvedValueOnce(defaultCharacter);
+    mockedGetRandomQuoteByAuthor.mockResolvedValueOnce(
+      Ok({
+        ...defaultQuote,
+        quote: 'The Random Quote',
+      })
+    );
+    await renderWithPath('1234');
+    expect(screen.getByText('"The Random Quote"')).toBeInTheDocument();
   });
 });
