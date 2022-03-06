@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { getCharacter } from '../../../services/breaking-bad';
 
@@ -9,7 +9,6 @@ jest.mock('../../../services/breaking-bad.ts');
 
 const mockedGetCharacter = getCharacter as jest.Mock<ReturnType<typeof getCharacter>>;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultCharacter = {
   char_id: 1,
   name: 'Test 1',
@@ -43,5 +42,31 @@ describe('In the character page', () => {
     await renderWithPath('124323');
 
     expect(location.hash === '#/').toBeTruthy();
+  });
+
+  it('Should render character', async () => {
+    mockedGetCharacter.mockResolvedValueOnce({
+      ...defaultCharacter,
+      name: 'The Name',
+      birthday: 'The Birthday',
+      occupation: ['occupation1', 'occupation2'],
+      status: 'The Status',
+      nickname: 'The Nickname',
+      appearance: [12345, 67890],
+      portrayed: 'The Portrayed',
+      category: 'The Category',
+      better_call_saul_appearance: [9876, 5432],
+    });
+    await renderWithPath('123');
+
+    expect(screen.getByText('The Name')).toBeInTheDocument();
+    expect(screen.getByText('The Birthday')).toBeInTheDocument();
+    expect(screen.getByText('occupation1 | occupation2')).toBeInTheDocument();
+    expect(screen.getByText('The Status')).toBeInTheDocument();
+    expect(screen.getByText('The Nickname')).toBeInTheDocument();
+    expect(screen.getByText('12345 | 67890')).toBeInTheDocument();
+    expect(screen.getByText('The Portrayed')).toBeInTheDocument();
+    expect(screen.getByText('The Category')).toBeInTheDocument();
+    expect(screen.getByText('9876 | 5432')).toBeInTheDocument();
   });
 });
