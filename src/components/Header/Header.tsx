@@ -4,7 +4,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
@@ -39,7 +39,10 @@ export function Header() {
 
 function LanguageSelector() {
   const [language, setLanguage] = useState('en');
-  const [, i18n] = useTranslation('main');
+  const [t, i18n] = useTranslation('main');
+  useEffect(() => {
+    document.title = t('header.app_title');
+  }, [language]);
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newLanguage: string) => {
     if (newLanguage !== null) {
