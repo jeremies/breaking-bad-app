@@ -1,7 +1,7 @@
 import { Ok } from '@hqoss/monads';
 // eslint-disable-next-line
 // @ts-ignore
-import { act, render, screen } from '@testing-library/react';
+import { act, render, fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { getCharacter, getRandomQuoteByAuthor } from '../../../services/breaking-bad';
 
@@ -91,5 +91,28 @@ describe('In the character page', () => {
     );
     await renderWithPath('1234');
     expect(screen.getByText('"The Random Quote"')).toBeInTheDocument();
+  });
+
+  it('Should render random quote on click reload', async () => {
+    mockedGetCharacter.mockResolvedValueOnce(defaultCharacter);
+    mockedGetRandomQuoteByAuthor.mockResolvedValueOnce(
+      Ok({
+        ...defaultQuote,
+        quote: 'The Random Quote 1',
+      })
+    );
+    await renderWithPath('1234');
+
+    mockedGetRandomQuoteByAuthor.mockResolvedValueOnce(
+      Ok({
+        ...defaultQuote,
+        quote: 'The Random Quote 2',
+      })
+    );
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('reload-button'));
+    });
+    expect(screen.queryByText('"The Random Quote 1"')).not.toBeInTheDocument();
+    expect(screen.getByText('"The Random Quote 2"')).toBeInTheDocument();
   });
 });

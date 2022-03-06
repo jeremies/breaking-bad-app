@@ -141,7 +141,7 @@ function CharacterQuote({
               <Typography variant="h6" ml={10} mr={10} mb={2}>
                 "{quote.quote}"
               </Typography>
-              <Fab onClick={reload}>
+              <Fab data-testid="reload-button" onClick={reload}>
                 <CachedIcon />
               </Fab>
             </div>
