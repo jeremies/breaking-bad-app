@@ -33,6 +33,7 @@ This project uses prettier and eslint to enforce a consistent code syntax.
 - `src/config` Contains configuration files.
 - `src/services` Contains the code that interacts with external systems (API requests).
 - `src/state` Contains redux related code.
+- `src/translations` Contains translation files.
 - `src/types` Contains type definitions alongside the code related to those types.
 - `src/utils` Contains utility functions.
 
