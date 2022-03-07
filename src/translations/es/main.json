@@ -1,6 +1,17 @@
 {
+  "character_grid": {
+    "error_server": "Ha ocurrido un error en la comunicación con el servidor"
+  },
   "character_page": {
-    "birthday": "Fecha de nacimiento"
+    "birthday": "Fecha de nacimiento",
+    "occupation": "Ocupación",
+    "status": "Estado",
+    "nickname": "Apodo",
+    "appearance": "Aparición",
+    "portrayed": "Representado por",
+    "category": "Categoría",
+    "better_call_saul_appearance": "Aparición en Better Call Saul",
+    "no_quotes": "No hay citas disponibles"
   },
   "header": {
     "app_title": "Reparto de Breaking Bad"
