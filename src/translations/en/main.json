@@ -1,6 +1,7 @@
 {
   "character_grid": {
-    "loading_characters": "Loading characters..."
+    "loading_characters": "Loading characters...",
+    "error_server": "An error has occurred in communication with the server"
   },
   "character_page": {
     "loading_character": "Loading character...",

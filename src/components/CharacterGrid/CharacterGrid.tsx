@@ -10,7 +10,7 @@ export function CharacterGrid() {
 
   return (
     <Fragment>
-      {error && <div>{error}</div>}
+      {error && <div>{t(error)}</div>}
       {!error &&
         characters.match({
           none: () => <div>{t('character_grid.loading_characters')}</div>,
