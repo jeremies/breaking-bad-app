@@ -76,7 +76,7 @@ function CharacterInfo({ character }: { character: Character }) {
     <div className={styles.container}>
       <img className={styles.characterImage} src={character.img} />
       <div className={styles.characterAttributes}>
-        <Typography variant="h3" gutterBottom>
+        <Typography className={styles.characterName} variant="h3" gutterBottom>
           {character.name}
         </Typography>
         <Attribute name={t('character_page.birthday')} value={character.birthday} />
