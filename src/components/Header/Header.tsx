@@ -55,11 +55,11 @@ function LanguageSelector() {
     <ToggleButtonGroup size="small" value={language} exclusive onChange={handleChange}>
       <ToggleButton value="en">
         <ReactCountryFlag className={styles.flag} svg countryCode="US" />
-        English
+        <span className={styles.buttonText}>English</span>
       </ToggleButton>
       <ToggleButton value="es">
         <ReactCountryFlag className={styles.flag} svg countryCode="ES" />
-        Español
+        <span className={styles.buttonText}>Español</span>
       </ToggleButton>
     </ToggleButtonGroup>
   );

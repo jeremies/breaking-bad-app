@@ -1,5 +1,8 @@
 {
   "character_page": {
     "birthday": "Fecha de nacimiento"
+  },
+  "header": {
+    "app_title": "Personajes de Breaking Bad"
   }
 }
