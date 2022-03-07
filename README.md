@@ -6,6 +6,23 @@ React App to show cast info for breaking bad.
 
 This codebase was created to demonstrate a frontend application built with React, Typescript, and Redux Toolkit including read operations, routing and more.
 
+It uses the following API to get all the data: https://breakingbadapi.com/
+
+This app consists of two screens:
+
+1. List of all existing characters.
+2. Character detail with a random quote.
+
+# Features
+
+- [x] Skeleton while loading data
+- [x] Manage data loading feedback and error management
+- [x] Ability to change the language between English and Spanish
+- [x] Responsive app
+- [x] Clean and Simple Material UI
+- [x] Redux State Management
+- [x] Tests
+
 # How it works
 
 The root of the application is the `src/components/App` component. The App component uses react-router's HashRouter to display the different pages. Each page is represented by a [function component](https://reactjs.org/docs/components-and-props.html).
@@ -36,6 +53,17 @@ This project uses prettier and eslint to enforce a consistent code syntax.
 - `src/translations` Contains translation files.
 - `src/types` Contains type definitions alongside the code related to those types.
 - `src/utils` Contains utility functions.
+
+## Built with
+
+- **@hqoss/monads**: for passing to the UI when data is loading or there has been an error using a single variable.
+- **@mui/material**: for importing some simple React components.
+- **@reduxjs/toolkit**: for Redux State Management.
+- **axios**: provides an easy-to-use API in a compact package for most of your HTTP communication needs.
+- **decoders**: Elegant and battle-tested validation library for type-safe input data for TypeScript
+- **i18next**: translations
+- **react-router-dom**: add routing to react apps
+- **typescript**: strongly typed programming language that builds on JavaScript
 
 # Getting started
 
