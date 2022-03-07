@@ -9,6 +9,10 @@
   height: 600px;
 }
 
+.characterImage.skeleton {
+  width: 400px;
+}
+
 .characterAttributes {
   margin-left: 20px;
 }
@@ -40,14 +44,23 @@
     margin-bottom: 20px;
   }
 
+  .characterImage.skeleton {
+    width: 300px;
+  }
+
   .characterAttributes {
     text-align: center;
+    margin-left: 0;
   }
 }
 
 @media (max-width: 600px) {
   .characterImage {
     height: 300px;
+  }
+
+  .characterImage.skeleton {
+    width: 200px;
   }
 
   .characterName {

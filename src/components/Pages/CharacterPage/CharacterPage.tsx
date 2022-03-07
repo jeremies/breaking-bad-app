@@ -13,6 +13,7 @@ import { Option } from '@hqoss/monads';
 import { Quote } from '../../../types/quote';
 import Fab from '@mui/material/Fab';
 import CachedIcon from '@mui/icons-material/Cached';
+import { Skeleton } from '@mui/material';
 
 export interface Params {
   id: string;
@@ -20,7 +21,6 @@ export interface Params {
 
 export function CharacterPage() {
   const { id } = useParams<keyof Params>() as Params;
-  const { t } = useTranslation('main');
 
   const {
     characterPage: { character, quote, quoteError },
@@ -35,7 +35,7 @@ export function CharacterPage() {
   return (
     <Fragment>
       {character.match({
-        none: () => <div>{t('character_page.loading_character')}</div>,
+        none: () => <CharacterInfoSkeleton />,
         some: (character) => <CharacterInfo character={character} />,
       })}
       <CharacterQuote quote={quote} quoteError={quoteError} character={character} />
@@ -95,6 +95,29 @@ function CharacterInfo({ character }: { character: Character }) {
   );
 }
 
+function CharacterInfoSkeleton() {
+  return (
+    <div className={styles.container}>
+      <Skeleton variant="rectangular">
+        <img className={`${styles.characterImage} ${styles.skeleton}`} />
+      </Skeleton>
+      <div className={styles.characterAttributes}>
+        <Typography className={styles.characterName} variant="h3" gutterBottom>
+          <Skeleton />
+        </Typography>
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+        <AttributeSkeleton />
+      </div>
+    </div>
+  );
+}
+
 function ArrayAttribute({ name, value }: { name: string; value: Array<string | number> }) {
   return <Attribute name={name} value={value.join(' | ')} />;
 }
@@ -106,6 +129,19 @@ function Attribute({ name, value }: { name: string; value: string }) {
         <strong>{name}</strong>
       </Typography>
       <Typography variant="body1">{value}</Typography>
+    </div>
+  );
+}
+
+function AttributeSkeleton() {
+  return (
+    <div className={styles.attribute}>
+      <Typography variant="body1">
+        <Skeleton width={200} />
+      </Typography>
+      <Typography variant="body1">
+        <Skeleton />
+      </Typography>
     </div>
   );
 }
@@ -135,7 +171,7 @@ function CharacterQuote({
       {quoteError && <Typography variant="body1">{t(quoteError)}</Typography>}
       {!quoteError &&
         quote.match({
-          none: () => <Typography variant="body1">{t('character_page.loading_quote')}</Typography>,
+          none: () => <Skeleton width={200}></Skeleton>,
           some: (quote) => (
             <div className={styles.existingQuoteContainer}>
               <Typography variant="h6" ml={10} mr={10} mb={2}>
