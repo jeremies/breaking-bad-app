@@ -119,7 +119,7 @@ function CharacterInfoSkeleton() {
 }
 
 function ArrayAttribute({ name, value }: { name: string; value: Array<string | number> }) {
-  return <Attribute name={name} value={value.join(' | ')} />;
+  return <Attribute name={name} value={value.length === 0 ? '--' : value.join(' | ')} />;
 }
 
 function Attribute({ name, value }: { name: string; value: string }) {
