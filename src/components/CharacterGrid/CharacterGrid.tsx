@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material';
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useStore } from '../../state/storeHooks';
@@ -11,17 +12,16 @@ export function CharacterGrid() {
   return (
     <Fragment>
       {error && <div>{t(error)}</div>}
-      {!error &&
-        characters.match({
-          none: () => <div>{t('character_grid.loading_characters')}</div>,
-          some: (characters) => (
-            <div className={styles.characterGrid}>
-              {characters.map((character) => (
-                <CharacterItem key={character.char_id} character={character} />
-              ))}
-            </div>
-          ),
-        })}
+      {!error && (
+        <div className={styles.characterGrid}>
+          {characters.match({
+            none: () =>
+              Array.from(Array(20).keys()).map((el) => <Skeleton key={el} variant="rectangular" height={300} />),
+            some: (characters) =>
+              characters.map((character) => <CharacterItem key={character.char_id} character={character} />),
+          })}
+        </div>
+      )}
     </Fragment>
   );
 }
